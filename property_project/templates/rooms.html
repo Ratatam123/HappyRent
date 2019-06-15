@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block content %}
+    
+    <h3>Latest offers for rooms</h3>
+
+    <div class="gap-20"></div>
+    <!-- -->
+
+    <div class = "card-deck-wrapper">
+      
+      <div class= "card-deck">
+        <div class="col-md-6">  <!-- rows einbauen ?? -->
+          {% for room in rooms.items %} <!-- items => pagination object!! -->
+            <div class="card" > <!--style="width:200px, height:200px"> -->
+               <!--  <img class="card-img-top" src="../static/images/apartment_1.jpg" alt="image of item"> -->
+              <div class="card-body">
+                <h4 class="card-title">{{ room.title }}</h4>
+                <p class="card-text">{{ room.description }}</p>
+
+                <ul class="list-inline">
+                  
+                  <!-- <li class="list-inline-item">Rooms: {{ room.rooms }} </li> -->
+                  <li class="list-inline-item">Size: {{ room.size }} m<sup>2</sup></li>
+                  <li class="list-inline-item">Rent: {{ room.rent }} €/Month</li>
+                  <small>
+                    <li class="list-inline-item">Published: {{ room.date_posted.strftime('%Y-%m-%d %H:%M') }} </li> 
+                  </small>
+
+                  <small>
+                    <li class="list-inline-item">By: 
+                      <a class="mr-2" href="{{ url_for('user_items', username=room.author.username) }}">
+                        {{ room.author.username }}
+                      </a>
+                    </li> 
+                  </small> 
+
+                </ul>
+
+                <a href="#" class="btn btn-primary stretched-link">Contact Landlord</a>
+              </div>
+            </div>
+            <div class="gap-20"></div>
+          {% endfor %}
+
+          {% for page_num in rooms.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+              {% if rooms.page == page_num %}
+                <a class="btn btn-info mb-4" href="{{ url_for('show_rooms', page=page_num) }}">{{ page_num }}</a>
+              {% else %}
+                <a class="btn btn-outline-info mb-4" href="{{ url_for('show_rooms', page=page_num) }}">{{ page_num }}</a>
+              {% endif %}
+            {% else %}
+              ...
+            {% endif %}
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+
+{% endblock content %}

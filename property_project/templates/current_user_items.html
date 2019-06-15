@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+{% block content %}
+    <!-- current_user.name kann auch durch Variable aus route ersetzt werden!! -->
+
+  <h4 class="mb-3">Hello {{ current_user.username }}, you can find your offers below.</h4>
+  
+  
+      <div class="gap-20"></div> <!-- Kann durch class ="mb-3" ersetzt werden?! -->
+      <!-- -->
+
+      <div class = "card-deck-wrapper">
+        
+        <div class= "card-deck">
+          <div class="col-md-6">  <!-- rows einbauen ?? -->
+            {% for prop_item in prop_items.items %} <!-- items => pagination object!! -->
+              <div class="card" > <!--style="width:200px, height:200px"> -->
+                 <!--  <img class="card-img-top" src="../static/images/apartment_1.jpg" alt="image of item"> -->
+                <div class="card-body">
+                  <h4 class="card-title">{{ prop_item.title }}</h4>
+
+                  <div>
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_item', item_id=prop_item.id) }}">Update</a>
+                    <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                  </div>
+
+                  <p class="card-text">{{ prop_item.description }}</p>
+
+                  <ul class="list-inline">
+                    
+                    <li class="list-inline-item">Nr. of Rooms: {{ prop_item.rooms }} </li>
+                    <li class="list-inline-item">Size: {{ prop_item.size }} m<sup>2</sup></li>
+                    <li class="list-inline-item">Rent: {{ prop_item.rent }} €/Month</li>
+                    <small>
+                      <li class="list-inline-item">Published: {{ prop_item.date_posted.strftime('%Y-%m-%d %H:%M') }} </li> 
+                    </small> 
+                  </ul>
+                <!-- <a href="#" class="btn btn-primary stretched-link">Contact Landlord</a> -->
+                </div>
+              </div> <!-- Ende Card -->
+              <div class="gap-20"></div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <form action="{{ url_for('delete_item', item_id=prop_item.id) }}" method="POST">
+                      <input class="btn btn-danger" type="submit" value="Delete">
+                    </form>
+                  </div>
+                </div>
+              </div> 
+            </div>  
+
+            {% endfor %}
+
+          <!-- Pagination   -->        
+          {% for page_num in prop_items.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2)%}  <!-- jinja2.exceptions.UndefinedError: 'prop_item' is undefined -->
+            {% if page_num %}
+              {% if prop_items.page == page_num %} <!-- IN obere Schleife integrierbar?!?!?! -->
+                <a class="btn btn-outline-info mb-4" href="{{ url_for('user_items', username=user.username, page = page_num) }}"> 
+                  {{ page_num }}
+                </a>
+              {% else %}
+                <a class="btn btn-outline-info mb-4" href="{{ url_for('user_items', username=user.username, page = page_num) }}">
+                {{ page_num }}
+                </a>
+              {% endif %}
+
+            {% else %}
+              ...
+            {% endif %}
+          {% endfor %}
+          </div> <!-- end col-md -->
+        </div> <!-- end Card Deck -->
+      </div>
+
+
+
+{% endblock content %}

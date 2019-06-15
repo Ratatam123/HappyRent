@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method ="POST" action="">
+            {{ form.hidden_tag() }} <!-- adds CSRF-token (cross site request forgery)-->
+
+            <fieldset class = "form-control">
+                <legend class="border-bottom mb-4"> Tell us what kind of property you want to advertise</legend>
+            
+                <!-- wird select ueber Attribut in der form-Klasse definiert?: SelectField-->
+                 <div class="form-group">
+                    {{ form.item_type.label(class="form-control-label") }}
+                    
+                    {% if form.item_type.errors %}
+                        {{ form.item_type(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.item_type.errors %}
+                                <span> {{ error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.item_type(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            
+
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+
+            </fieldset>
+
+        </form>
+    </div>
+    
+{% endblock content %}

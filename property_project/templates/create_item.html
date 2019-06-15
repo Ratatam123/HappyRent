@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method ="POST" action="">
+            {{ form.hidden_tag() }} <!-- adds CSRF-token (cross site request forgery)-->
+
+            <fieldset class = "form-control">
+                <legend class="border-bottom mb-4"> Describe your offer here!</legend>
+            
+                <div class="form-group">
+                    {{ form.title.label(class="form-control-label") }}
+                    
+                    {% if form.title.errors %}
+                        {{ form.title(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.title.errors %}
+                                <span> {{ error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.title(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.description.label(class="form-control-label") }}
+                    {% if form.description.errors %}
+                        {{ form.description(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.description.errors %}
+                                <span> {{ error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.description(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.rooms.label(class="form-control-label") }}
+                    {% if form.rooms.errors %}
+                        {{ form.rooms(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.rooms.errors %}
+                                <span> {{ error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.rooms(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.size.label(class="form-control-label") }}
+                    {% if form.size.errors %}
+                        {{ form.size(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.size.errors %}
+                                <span> {{ error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.size(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.rent.label(class="form-control-label") }}
+                    {% if form.rent.errors %}
+                        {{ form.rent(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.rent.errors %}
+                                <span> {{ error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.rent(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+
+            </fieldset>
+
+            
+            <!-- Forgotten password option -->
+            <!--
+            <small class="text-muted ml-2">
+                <a href="#">Forgot Password?</a>
+            </small>
+            -->
+        </form>
+    </div>
+    
+{% endblock content %}

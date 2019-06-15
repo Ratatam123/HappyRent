@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block content %}
+  
+  <div class="col-md-6">  <!-- rows einbauen ?? -->
+          
+      <div class="card" > <!--style="width:200px, height:200px"> -->
+         <!--  <img class="card-img-top" src="../static/images/apartment_1.jpg" alt="image of item"> -->
+        <div class="card-body">
+          <h4 class="card-title">{{ item.title }}</h4>
+          
+          {% if item.author == current_user %}
+            <div>
+              <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_item', item_id=item.id) }}">Update</a>
+              <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+            </div>
+          {% endif %}
+
+          <p class="card-text">{{ item.description }}</p>
+
+          <ul class="list-inline">
+            
+            <!-- <li class="list-inline-item">items: {{ item.items }} </li> -->
+            <li class="list-inline-item">Size: {{ item.size }} m<sup>2</sup></li>
+            <li class="list-inline-item">Rent: {{ item.rent }} €/Month</li>
+            <small>
+              <li class="list-inline-item">Published: {{ item.date_posted.strftime('%Y-%m-%d %H:%M') }} </li> 
+            </small>
+          </ul>
+
+          <a href="#" class="btn btn-primary stretched-link">Contact Landlord</a>
+        </div>
+      </div>
+            
+  </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <form action="{{ url_for('delete_item', item_id=item.id) }}" method="POST">
+            <input class="btn btn-danger" type="submit" value="Delete">
+          </form>
+        </div>
+      </div>
+    </div> 
+  </div>
+{% endblock content %}
+
