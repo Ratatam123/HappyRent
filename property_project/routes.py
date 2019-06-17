@@ -1,8 +1,8 @@
 
-from flask import render_template, request, redirect, jsonify, url_for, flash, session
+from flask import render_template, request, redirect, jsonify, url_for, flash
 from sqlalchemy import asc
-from property_project import app, db#, github #, bcrypt
-from property_project.forms import TypeForm, ItemForm, LocalRegistrationForm, LocalLoginForm
+from property_project import app, db
+from property_project.forms import TypeForm, ItemForm
 from property_project.db_models import User, PropertyItem, PropertyType
 
 
@@ -10,7 +10,7 @@ from property_project.db_models import  google_blueprint, google
 from flask_dance.consumer import oauth_authorized ## signal for Oauth
 from sqlalchemy.orm.exc import NoResultFound
 
-from flask_login import (UserMixin, LoginManager, current_user, login_required, 
+from flask_login import (LoginManager, current_user, login_required,
                         login_user,logout_user) 
 
 import random, string
