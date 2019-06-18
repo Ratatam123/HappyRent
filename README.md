@@ -55,21 +55,26 @@ read, update and delete their own offers in the application.
 The OAuth system requires a Client Id and a Client Secret. They can be found in the .keys.txt file.
 You should copy the contents in your local .bash_profile ([OSX users can find more info here](https://natelandau.com/my-mac-osx-bash_profile/)).
 
-If you fail to access your bash_profile, you can add the lines 
+If you fail to access your bash_profile, you can instead in the \_\_init\_\_.py file add the following lines 
 
-* app.config['GOOGLE_OAUTH_CLIENT_ID'] = ...
-* app.config['GOOGLE_OAUTH_CLIENT_SECRET'] = ...
+```python
+app.config['GOOGLE_OAUTH_CLIENT_ID'] = ...
+app.config['GOOGLE_OAUTH_CLIENT_SECRET'] = ...
+```
 
 right below the line
 
-* app = Flask(__name__)
+```python
+app = Flask(__name__)
+```
 
-in the __init__.py file and replace ... with the values from the .keys.txt file. In the config.py file
-you should also comment out the lines in the latter case.
+and replace ... with the values from the .keys.txt file. If you do it this way, you also need to 
+comment out/delete the following lines in the config.py file.
 
-* GOOGLE_OAUTH_CLIENT_ID = os.environ.get('GOOGLE_OAUTH_CLIENT_ID')
-* GOOGLE_OAUTH_CLIENT_SECRET = os.environ.get('GOOGLE_OAUTH_CLIENT_SECRET') 
- 
+```python
+GOOGLE_OAUTH_CLIENT_ID = os.environ.get('GOOGLE_OAUTH_CLIENT_ID')
+GOOGLE_OAUTH_CLIENT_SECRET = os.environ.get('GOOGLE_OAUTH_CLIENT_SECRET') 
+```
 
 ### JSON API endpoints
 
