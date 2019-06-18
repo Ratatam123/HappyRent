@@ -1,55 +1,45 @@
 {% extends "layout.html" %}
 {% block content %}
-    
-    <h2 class="mb-3">Offers by {{ user.username }} ({{ prop_items.total }}) </h2>
-
-    <div class="gap-20"></div> <!-- Kann durch class ="mb-3" ersetzt werden?! -->
-    <!-- -->
-
-    <div class = "card-deck-wrapper">
-      
-      <div class= "card-deck">
-        <div class="col-md-6">  <!-- rows einbauen ?? -->
-          {% for prop_item in prop_items.items %} <!-- items => pagination object!! -->
-            <div class="card" > <!--style="width:200px, height:200px"> -->
-               <!--  <img class="card-img-top" src="../static/images/apartment_1.jpg" alt="image of item"> -->
-              <div class="card-body">
-                <h4 class="card-title">{{ prop_item.title }}</h4>
-                <p class="card-text">{{ prop_item.description }}</p>
-
-                <ul class="list-inline">
-                  
-                  <li class="list-inline-item">Nr. of Rooms: {{ prop_item.rooms }} </li>
-                  <li class="list-inline-item">Size: {{ prop_item.size }} m<sup>2</sup></li>
-                  <li class="list-inline-item">Rent: {{ prop_item.rent }} €/Month</li>
-                  <small>
-                    <li class="list-inline-item">Published: {{ prop_item.date_posted.strftime('%Y-%m-%d %H:%M') }} </li> 
-                  </small> 
-                </ul>
-              <!-- <a href="#" class="btn btn-primary stretched-link">Contact Landlord</a> -->
-              </div>
-            </div> <!-- Ende Card -->
-            <div class="gap-20"></div>
-          {% endfor %}
-        
-        {% for page_num in prop_items.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2)%}  <!-- jinja2.exceptions.UndefinedError: 'prop_item' is undefined -->
-          {% if page_num %}
-            {% if prop_items.page == page_num %} <!-- IN obere Schleife integrierbar?!?!?! -->
-              <a class="btn btn-outline-info mb-4" href="{{ url_for('user_items', username=user.username, page = page_num) }}"> 
-                {{ page_num }}
-              </a>
-            {% else %}
-              <a class="btn btn-outline-info mb-4" href="{{ url_for('user_items', username=user.username, page = page_num) }}">
-              {{ page_num }}
-              </a>
-            {% endif %}
-
-          {% else %}
-            ...
-          {% endif %}
-        {% endfor %}
-        </div> <!-- Ende col-md -->
-      </div> <!-- Ende Card Deck -->
-    </div>
-
+<h2 class="mb-3">Offers by {{ user.username }} ({{ prop_items.total }}) </h2>
+<div class="gap-20"></div> <!-- Kann durch class ="mb-3" ersetzt werden?! -->
+<!-- -->
+<div class="card-deck-wrapper">
+    <div class="card-deck">
+        <div class="col-md-6">
+            {% for prop_item in prop_items.items %}
+            <!-- items => pagination object-->
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ prop_item.title }}</h4>
+                        <p class="card-text">{{ prop_item.description }}</p>
+                        <ul class="list-inline">
+                            <li class="list-inline-item">Nr. of Rooms: {{ prop_item.rooms }} </li>
+                            <li class="list-inline-item">Size: {{ prop_item.size }} m<sup>2</sup></li>
+                            <li class="list-inline-item">Rent: {{ prop_item.rent }} €/Month</li>
+                            <small>
+                                <li class="list-inline-item">Published: {{ prop_item.date_posted.strftime('%Y-%m-%d %H:%M') }} </li>
+                            </small>
+                        </ul>
+                    </div>
+                </div> <!-- end Card -->
+                <div class="gap-20"></div>
+            {% endfor %}
+            {% for page_num in prop_items.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2)%}
+                {% if page_num %}
+                {% if prop_items.page == page_num %}
+                    <a class="btn btn-outline-info mb-4" href="{{ url_for('user_items', username=user.username, page = page_num) }}">
+                        {{ page_num }}
+                    </a>
+                {% else %}
+                    <a class="btn btn-outline-info mb-4" href="{{ url_for('user_items', username=user.username, page = page_num) }}">
+                        {{ page_num }}
+                    </a>
+                {% endif %}
+                {% else %}
+                ...
+                {% endif %}
+            {% endfor %}
+        </div> <!-- end col-md -->
+    </div> <!-- end Card Deck -->
+</div>
 {% endblock content %}

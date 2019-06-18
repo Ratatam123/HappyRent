@@ -27,7 +27,7 @@ class User(db.Model, UserMixin):
         }
 
 
-# to relate OAuth-user-info to local User-table
+# To relate OAuth-user-info to local User-table
 class OAuth(OAuthConsumerMixin, db.Model):  # OAuthConsumerMixin adds extra
     # attributes: provider, token etc.
     user_id = db.Column(db.Integer, db.ForeignKey(
@@ -88,11 +88,15 @@ class PropertyItem(db.Model):
 
 
 # Google OAuth blueprint
-google_blueprint = make_google_blueprint(scope=["https://www.googleapis.com/auth/userinfo.profile",
+google_blueprint = make_google_blueprint(scope=["openid",
+                                                "https://www.googleapis.com/auth/userinfo.profile",
                                                 "https://www.googleapis.com/auth/userinfo.email"])
+
 app.register_blueprint(google_blueprint, url_prefix="/google_login")
 google_blueprint.storage = SQLAlchemyStorage(OAuth, db.session, user=current_user,
                                              user_required=False)
+
+
 
 
 

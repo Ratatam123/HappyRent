@@ -1,0 +1,6 @@
+## key for Flask App
+export SECRET_KEY='3516faa3660d50c1f5b34496db9e4819'
+
+## Google OAuth keys
+export GOOGLE_OAUTH_CLIENT_ID='646163642970-koimt79vmr3355q1sldsd9e68hvvr336.apps.googleusercontent.com'
+export GOOGLE_OAUTH_CLIENT_SECRET='asUsmHtCv1TsfWa-gsJBJoOd'

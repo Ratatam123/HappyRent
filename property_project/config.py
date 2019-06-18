@@ -15,3 +15,4 @@ class Config:
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
     OAUTHLIB_RELAX_TOKEN_SCOPE = True
+

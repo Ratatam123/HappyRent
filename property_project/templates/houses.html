@@ -1,70 +1,49 @@
 {% extends "layout.html" %}
 {% block content %}
-    
-    <h3>Latest offers for houses</h3>
-
-    <div class="gap-20"></div>
-    <!-- -->
-
-    <div class = "card-deck-wrapper">
-      
-      <div class= "card-deck">
-        <div class="col-md-6">  <!-- rows einbauen ?? -->
-          {% for house in houses.items %} <!-- items => pagination object!! -->
-            <div class="card" > <!--style="width:200px, height:200px"> -->
-               <!--  <img class="card-img-top" src="../static/images/apartment_1.jpg" alt="image of item"> -->
-              <div class="card-body">
-                <h4 class="card-title">{{ house.title }}</h4>
-                <p class="card-text">{{ house.description }}</p>
-
-                <ul class="list-inline">
-                  
-                  <li class="list-inline-item">Nr. of Rooms: {{ house.rooms }} </li>
-                  <li class="list-inline-item">Size: {{ house.size }} m<sup>2</sup></li>
-                  <li class="list-inline-item">Rent: {{ house.rent }} €/Month</li>
-                  <small>
-                    <li class="list-inline-item">Published: {{ house.date_posted.strftime('%Y-%m-%d %H:%M') }} </li> 
-                  </small>
-
-                  <small>
-                    <li class="list-inline-item">By: 
-                      <a class="mr-2" href="{{ url_for('user_items', username=house.author.username) }}">
-                        {{ house.author.username }}
-                      </a>
-                    </li> 
-                  </small> 
-
-                </ul>
-              <a href="#" class="btn btn-primary stretched-link">Contact Landlord</a>
-              </div>
-            </div> <!-- Ende Card -->
+<h3>Latest offers for houses</h3>
+<div class="gap-20"></div>
+<div class="card-deck-wrapper">
+    <div class="card-deck">
+        <div class="col-md-6">
+            {% for house in houses.items %}
+            <!-- items => pagination object -->
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ house.title }}</h4>
+                    <p class="card-text">{{ house.description }}</p>
+                    <ul class="list-inline">
+                        <li class="list-inline-item">Nr. of Rooms: {{ house.rooms }} </li>
+                        <li class="list-inline-item">Size: {{ house.size }} m<sup>2</sup></li>
+                        <li class="list-inline-item">Rent: {{ house.rent }} €/Month</li>
+                        <small>
+                            <li class="list-inline-item">Published: {{ house.date_posted.strftime('%Y-%m-%d %H:%M') }} </li>
+                        </small>
+                        <small>
+                            <li class="list-inline-item">By:
+                                <a class="mr-2" href="{{ url_for('user_items', username=house.author.username) }}">
+                                    {{ house.author.username }}
+                                </a>
+                            </li>
+                        </small>
+                    </ul>
+                    <a href="#" class="btn btn-primary stretched-link">Contact Landlord</a>
+                </div>
+            </div> <!-- end Card -->
             <div class="gap-20"></div>
-          {% endfor %}
-          {% for page_num in houses.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-            {% if page_num %}
-              {% if houses.page == page_num %}
-                <a class="btn btn-info mb-4" href="{{ url_for('show_houses', page=page_num) }}">{{ page_num }}</a>
-              {% else %}
-                <a class="btn btn-outline-info mb-4" href="{{ url_for('show_houses', page=page_num) }}">{{ page_num }}</a>
-              {% endif %}
-            {% else %}
-              ...
-            {% endif %}
-          {% endfor %}
-        </div> <!-- Ende col-md -->
-      </div> <!-- Ende Card Deck -->
-    </div>
-
+            {% endfor %}
+            {% for page_num in houses.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if houses.page == page_num %}
+                    <a class="btn btn-info mb-4" href="{{ url_for('show_houses', page=page_num) }}">{{ page_num }}</a>
+                    {% else %}
+                    <a class="btn btn-outline-info mb-4" href="{{ url_for('show_houses', page=page_num) }}">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                ...
+                {% endif %}
+            {% endfor %}
+        </div> <!-- end col-md -->
+    </div> <!-- end Card Deck -->
+</div>
 {% endblock content %}
 
-
-<!-- Basic card code -->
-
-<!-- <div class="card" style="width:400px">
-  <img class="card-img-top" src="img_avatar1.png" alt="Card image">
-  <div class="card-body">
-    <h4 class="card-title">John Doe</h4>
-    <p class="card-text">Some example text.</p>
-    <a href="#" class="btn btn-primary">See Profile</a>
-  </div>
-</div> -->

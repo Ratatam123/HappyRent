@@ -50,6 +50,27 @@ Google Account they are redirected to the home view of the actual web app. Behin
 are saved as users in the database under their Google username. Being logged in enables them to create,
 read, update and delete their own offers in the application.
 
+####  Security & Keys
+
+The OAuth system requires a Client Id and a Client Secret. They can be found in the .keys.txt file.
+You should copy the contents in your local .bash_profile ([OSX users can find more info here](https://natelandau.com/my-mac-osx-bash_profile/)).
+
+If you fail to access your bash_profile, you can add the lines 
+
+* app.config['GOOGLE_OAUTH_CLIENT_ID'] = ...
+* app.config['GOOGLE_OAUTH_CLIENT_SECRET'] = ...
+
+right below the line
+
+* app = Flask(__name__)
+
+in the __init__.py file and replace ... with the values from the .keys.txt file. In the config.py file
+you should also comment out the lines in the latter case.
+
+* GOOGLE_OAUTH_CLIENT_ID = os.environ.get('GOOGLE_OAUTH_CLIENT_ID')
+* GOOGLE_OAUTH_CLIENT_SECRET = os.environ.get('GOOGLE_OAUTH_CLIENT_SECRET') 
+ 
+
 ### JSON API endpoints
 
 All offers
