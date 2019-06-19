@@ -23,7 +23,7 @@ with a sqlite database in the backend.
 ### Starting Vagrant
 
 * cd into vagrant directory of your local machine
-* type following commands in the terminnal to start up vagrant
+* type following commands in the terminal to start up vagrant
 
 ```console
 vagrant up
@@ -35,27 +35,34 @@ vagrant ssh
 [comment]: <> (Python version?)
 
 * install the modules listed in requirements.txt
-* cd into the property_project directory
+* cd into the project directory
 * run following command in the Terminal
 
 ```console
 python3 run.py
 ```
 
+* access http://localhost:5000/ in the web browser of your choice
+
 ### Authentication
 
-When users run the application and enter http://localhost:5000/ in their Browser they are redirected
-to the the Google sign in, which acts as an OAuth2 provider. After successfully logging in to their 
-Google Account they are redirected to the home view of the actual web app. Behind the scenes they
-are saved as users in the database under their Google username. Being logged in enables them to create,
-read, update and delete their own offers in the application.
+The application uses Google as an OAuth2 provider. Users consequently need to have a Google user 
+account to log in and use the website. 
+
+When users run the application and enter http://localhost:5000/ 
+in their web browser, they are initially redirected to the Google sign in page. 
+After successfully logging in to their Google Account they are redirected to the home view 
+of the actual web app. Behind the scenes they are stored with their Google username in the database. 
+Being logged in enables them to create, read, update and delete their own 
+offers in the application.
 
 ####  Security & Keys
 
 The OAuth system requires a Client Id and a Client Secret. They can be found in the .keys.txt file.
-You should copy the contents in your local .bash_profile ([OSX users can find more info here](https://natelandau.com/my-mac-osx-bash_profile/)).
+You should copy the contents in your local .bash_profile ([OSX users can find more info here]
+(https://natelandau.com/my-mac-osx-bash_profile/)).
 
-If you fail to access your bash_profile, you can instead in the \_\_init\_\_.py file add the following lines 
+If you fail to access your bash_profile, you can instead in the *\_\_init\_\_.py* file add the following lines 
 
 ```python
 app.config['GOOGLE_OAUTH_CLIENT_ID'] = ...
@@ -68,13 +75,26 @@ right below the line
 app = Flask(__name__)
 ```
 
-and replace ... with the values from the .keys.txt file. If you do it this way, you also need to 
-comment out/delete the following lines in the config.py file.
+and replace *...* with the values from the *.keys.txt* file. If you do it this way, you also need to 
+comment out/delete the following lines in the *config.py* file.
 
 ```python
 GOOGLE_OAUTH_CLIENT_ID = os.environ.get('GOOGLE_OAUTH_CLIENT_ID')
 GOOGLE_OAUTH_CLIENT_SECRET = os.environ.get('GOOGLE_OAUTH_CLIENT_SECRET') 
 ```
+
+#### Issues
+
+The log out functionality sometimes doesn't work properly after a user is being logged in for a 
+longer period of time. The issue is likely linked to the expiration of the OAuth token on the Google 
+side. Suggestions for improvements in the code are welcome. Relevant functions in *routes.py*: 
+
+```python
+google_login()
+google_logged_in(blueprint, token)
+logout()
+```
+are welcome.
 
 ### JSON API endpoints
 
@@ -91,6 +111,8 @@ Offer by type (house, apartment, room)
 
 * http://localhost:5000/property_type/items/JSON
 * values for variable *property_type* in the URL: house, apartment or room
+
+
 
 ## References
 
