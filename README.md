@@ -11,7 +11,7 @@ with a sqlite database in the backend.
 * Virtual Box 
 * Vagrant
 * Python 3 installation in vagrant environment
-* (Unix style) Terminal/Bash
+* (Unix style) Shell
 
 ## Getting started
 
@@ -22,8 +22,8 @@ with a sqlite database in the backend.
 
 ### Starting Vagrant
 
-* cd into vagrant directory of your local machine
-* type following commands in the terminal to start up vagrant
+* cd into the vagrant directory on your local machine
+* type following commands in the Shell to start up vagrant
 
 ```console
 vagrant up
@@ -36,7 +36,7 @@ vagrant ssh
 
 * install the modules listed in requirements.txt
 * cd into the project directory
-* run following command in the Terminal
+* run following command in the Shell
 
 ```console
 python run.py

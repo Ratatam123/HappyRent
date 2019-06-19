@@ -44,11 +44,10 @@ def about():
 
 #### GOOGLE LOGIN #####
 
-
 @app.route("/")
 @app.route('/google_login')
 def google_login():
-    if not google.authorized:
+    if not google.authorized:  ## wiederhole authorized
         return redirect(url_for('google.login'))
 
     account_info = google.get("/oauth2/v1/userinfo")
@@ -64,7 +63,7 @@ def google_login():
 @oauth_authorized.connect_via(google_blueprint)
 def google_logged_in(blueprint, token):
     # Parameters:
-    # The first argument is the function that should be called when the signal is emitted,
+    # The first argument is the object that should be called when the signal is emitted,
     # the optional second argument specifies a sender.
 
     account_info = blueprint.session.get("/oauth2/v1/userinfo")  # ('/user')
@@ -75,9 +74,11 @@ def google_logged_in(blueprint, token):
         query = User.query.filter_by(username=username)
 
         try:
+            # Test if user already exists in database
             user = query.one()
             print("no user found.")
         except NoResultFound:
+            # Add the user to the database
             user = User(username=username)
             db.session.add(user)
             db.session.commit()
@@ -86,13 +87,14 @@ def google_logged_in(blueprint, token):
         flash("You are logged in with Google.", 'success')
 
 
-@login_required
+#@login_required ## relevant?? => ohne Testen
 @app.route("/logout")
 def logout():
 
     try:
         token = app.blueprints["google"].token["access_token"]
-        resp = google.post(  # revoking token on google side
+        # revoking token on google side
+        resp = google.post(
             "https://accounts.google.com/o/oauth2/revoke",
             params={"token": token},
             headers={"Content-Type": "application/x-www-form-urlencoded"}
