@@ -39,7 +39,7 @@ vagrant ssh
 * run following command in the Terminal
 
 ```console
-python3 run.py
+python run.py
 ```
 
 * access http://localhost:5000/ in the web browser of your choice
@@ -94,7 +94,6 @@ google_login()
 google_logged_in(blueprint, token)
 logout()
 ```
-are welcome.
 
 ### JSON API endpoints
 
