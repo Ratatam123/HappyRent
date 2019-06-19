@@ -4,7 +4,7 @@
 
 This Web App was created as part of the Fullstack Web development course by Udacity. Users of the App 
 are authorized via OAuth2 (Google as a provider) and can create, read, update and delete ("CRUD" functionality)
-offers for their real estate after logging in. For now, the Application only runs locally and is equipped 
+offers for their real estate after logging in. For now, the application only runs locally and is equipped 
 with a sqlite database in the backend.
 
 ## Prerequisites
@@ -17,7 +17,7 @@ with a sqlite database in the backend.
 
 [comment]: <> (Verlinkung?)
 * set up vagrant: 
-&nbsp;&nbsp;&nbsp;&nbsp;[Here you can find more information on how to set it up](https://medium.com/@JohnFoderaro/how-to-set-up-a-local-linux-environment-with-vagrant-163f0ba4da77)
+&nbsp;&nbsp;&nbsp;&nbsp;[More information on how to set it up](https://medium.com/@JohnFoderaro/how-to-set-up-a-local-linux-environment-with-vagrant-163f0ba4da77)
 * clone github repository into your local vagrant directory
 
 ### Starting Vagrant
@@ -30,11 +30,11 @@ vagrant up
 vagrant ssh
 ```
 
-### Running the application
+### Running the Application
     
 [comment]: <> (Python version?)
 
-* install the modules listed in requirements.txt
+* install the modules listed in *requirements.txt*
 * cd into the project directory
 * run following command in the Shell
 
@@ -58,7 +58,7 @@ offers in the application.
 
 ####  Security & Keys
 
-The OAuth system requires a Client Id and a Client Secret. They can be found in the .keys.txt file.
+The OAuth system requires a Client Id and a Client Secret. They can be found in the *.keys.txt* file.
 You should copy the contents in your local .bash_profile ([OSX users can find more info here]
 (https://natelandau.com/my-mac-osx-bash_profile/)).
 
