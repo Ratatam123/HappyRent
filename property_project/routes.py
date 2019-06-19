@@ -62,13 +62,12 @@ def google_login():
 # signal communicating log-in status
 @oauth_authorized.connect_via(google_blueprint)
 def google_logged_in(blueprint, token):
-    # Parameters:
-    # The first argument is the object that should be called when the signal is emitted,
-    # the optional second argument specifies a sender.
+    """
+    The first argument is the object that should be called when the signal is emitted,
+    the optional second argument specifies a sender."""
 
-    account_info = blueprint.session.get("/oauth2/v1/userinfo")  # ('/user')
-    print("SIGNAL CALLED!")
-    if account_info.ok:  # hierher gelangt es nicht?!
+    account_info = blueprint.session.get("/oauth2/v1/userinfo")
+    if account_info.ok:
         account_info_json = account_info.json()
         username = account_info_json['name']
         query = User.query.filter_by(username=username)
@@ -87,7 +86,6 @@ def google_logged_in(blueprint, token):
         flash("You are logged in with Google.", 'success')
 
 
-#@login_required ## relevant?? => ohne Testen
 @app.route("/logout")
 def logout():
 
