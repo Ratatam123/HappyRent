@@ -78,14 +78,20 @@ offers in the application.
 #### Issues
 
 The log out functionality sometimes doesn't work properly after a user is being logged in for a 
-longer period of time. The issue is likely linked to the expiration of the OAuth token on the Google 
-side. Suggestions for improvements in the code are welcome. Relevant functions in *routes.py*: 
+longer period of time. The issue is likely linked to problems in the communication with the Google
+API. Suggestions for improvements in the code are welcome. Relevant functions in *routes.py*: 
 
 ```python
 google_login()
 google_logged_in(blueprint, token)
 logout()
 ```
+
+#### "CRUD" (create, read, update, delete) functionality
+
+Once logged in a user can create an offer by clicking *Create an Offer!* in the navigation bar on top
+of the site. The button *My Offers* on the other hand lists for the user logged in to read, update
+and delete his own offers.
 
 ### JSON API endpoints
 
