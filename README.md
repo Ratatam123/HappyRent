@@ -87,10 +87,10 @@ google_logged_in(blueprint, token)
 logout()
 ```
 
-#### "CRUD" (create, read, update, delete) functionality
+### "CRUD" (create, read, update, delete) functionality
 
 Once logged in a user can create an offer by clicking *Create an Offer!* in the navigation bar on top
-of the site. The button *My Offers* on the other hand lists for the user logged in to read, update
+of the site. The button *My Offers* on the other hand enables the user logged in to read, update
 and delete his own offers.
 
 ### JSON API endpoints
