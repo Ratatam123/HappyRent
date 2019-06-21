@@ -10,7 +10,7 @@ with a sqlite database in the backend.
 ## Prerequisites
 * Virtual Box 
 * Vagrant
-* Python 3 installation in vagrant environment
+* Python 3 installation in Vagrant environment
 * (Unix style) Shell
 
 ## Getting started
@@ -22,8 +22,8 @@ with a sqlite database in the backend.
 
 ### Starting Vagrant
 
-* cd into the vagrant directory on your local machine
-* type following commands in the Shell to start up vagrant
+* cd into the Vagrant directory on your local machine
+* type following commands in the Shell to start up Vagrant
 
 ```console
 vagrant up
