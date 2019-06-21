@@ -49,7 +49,7 @@ GOOGLE_OAUTH_CLIENT_ID = ...
 GOOGLE_OAUTH_CLIENT_SECRET = ...
 ```
 They can also be found in the *.keys.txt* file as environment variables and could normally
-be copied in one's *bash_profile*, but as vagrant is used in this project it would need to be
+be copied in one's *bash_profile*, but as Vagrant is used in this project it would need to be
 included in the *Vagrantfile* with a different syntax instead 
 ([For more details on this issue](https://stackoverflow.com/questions/19648088/pass-environment-variables-to-vagrant-shell-provisioner)).
 
