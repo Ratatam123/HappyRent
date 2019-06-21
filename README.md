@@ -1,4 +1,4 @@
-# Property Project
+# HappyRent
 
 ## Purpose of this project
 
@@ -28,6 +28,7 @@ with a sqlite database in the backend.
 ```console
 vagrant up
 vagrant ssh
+cd /vagrant
 ```
 
 ## Running the Application
