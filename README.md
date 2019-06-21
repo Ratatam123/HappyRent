@@ -30,9 +30,30 @@ vagrant up
 vagrant ssh
 ```
 
-### Running the Application
+## Running the Application
     
 [comment]: <> (Python version?)
+
+### Authentication
+
+The application uses Google as an OAuth2 provider. Users consequently need to have a Google user 
+account to log in and use the website. 
+
+#### Security Keys
+
+The OAuth system requires a *Client Id* and a *Client Secret*. For the moment they are hardcoded in
+the *config.py* file. 
+
+```python
+GOOGLE_OAUTH_CLIENT_ID = ...
+GOOGLE_OAUTH_CLIENT_SECRET = ...
+```
+They can also be found in the *.keys.txt* file as environment variables and could normally
+be copied in one's *bash_profile*, but as vagrant is used in this project it would need to be
+included in the *Vagrantfile* with a different syntax instead 
+([For more details on this issue](https://stackoverflow.com/questions/19648088/pass-environment-variables-to-vagrant-shell-provisioner)).
+
+#### Start the Application
 
 * install the modules listed in *requirements.txt*
 * cd into the project directory
@@ -44,44 +65,15 @@ python run.py
 
 * access http://localhost:5000/ in the web browser of your choice
 
-### Authentication
-
-The application uses Google as an OAuth2 provider. Users consequently need to have a Google user 
-account to log in and use the website. 
+##### Explanation of the Login Process
 
 When users run the application and enter http://localhost:5000/ 
 in their web browser, they are initially redirected to the Google sign in page. 
 After successfully logging in to their Google Account they are redirected to the home view 
-of the actual web app. Behind the scenes they are stored with their Google username in the database. 
-Being logged in enables them to create, read, update and delete their own 
+of the actual web app. Behind the scenes the user logging in is stored with their Google username in the database. 
+Being logged in enables a user to create, read, update and delete their own 
 offers in the application.
 
-####  Security & Keys
-
-The OAuth system requires a Client Id and a Client Secret. They can be found in the *.keys.txt* file.
-You should copy the contents in your local .bash_profile ([OSX users can find more info here]
-(https://natelandau.com/my-mac-osx-bash_profile/)).
-
-If you fail to access your bash_profile, you can instead in the *\_\_init\_\_.py* file add the following lines 
-
-```python
-app.config['GOOGLE_OAUTH_CLIENT_ID'] = ...
-app.config['GOOGLE_OAUTH_CLIENT_SECRET'] = ...
-```
-
-right below the line
-
-```python
-app = Flask(__name__)
-```
-
-and replace *...* with the values from the *.keys.txt* file. If you do it this way, you also need to 
-comment out/delete the following lines in the *config.py* file.
-
-```python
-GOOGLE_OAUTH_CLIENT_ID = os.environ.get('GOOGLE_OAUTH_CLIENT_ID')
-GOOGLE_OAUTH_CLIENT_SECRET = os.environ.get('GOOGLE_OAUTH_CLIENT_SECRET') 
-```
 
 #### Issues
 
