@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask_wtf import FlaskForm
 
 from wtforms import (StringField, IntegerField, BooleanField, TextAreaField,
@@ -13,7 +14,6 @@ class TypeForm(FlaskForm):
     submit = SubmitField(
         'Save the category and let me give you more info about the offer')
 
-
 class ItemForm(FlaskForm):
 
     title = StringField('Title', validators=[DataRequired()])
@@ -21,7 +21,7 @@ class ItemForm(FlaskForm):
     rooms = IntegerField('Number of rooms', validators=[DataRequired()])
     size = IntegerField('Size in square meters (whole number)', validators=[
                         DataRequired()], render_kw={"placeholder": "50"})
-    rent = IntegerField('Rent in € (whole amount without cents)', validators=[
+    rent = IntegerField('Rent in Euro (whole amount without cents)', validators=[
                         DataRequired()], render_kw={"placeholder": "100"})
 
     submit = SubmitField('Publish my offer!')
@@ -37,7 +37,7 @@ class LocalRegistrationForm(FlaskForm):
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
-        if user:  # Link zu github-login in Text setzen??
+        if user:
             raise ValidationError('That username is not known to our system yet,'
                                   + ' please retry logging in via Github.')
 

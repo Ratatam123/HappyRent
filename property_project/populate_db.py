@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from property_project.db_models import User, PropertyItem, PropertyType
 from property_project import db
 

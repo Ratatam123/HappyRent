@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import render_template, request, redirect, jsonify, url_for, flash
 from sqlalchemy import asc
 from property_project import app, db
@@ -24,8 +25,6 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-# @app.route("/")
-# @app.route("/google/authorized")
 @app.route("/home")
 def home():
     if not google.authorized:
