@@ -117,7 +117,8 @@ Offer by type (house, apartment, room)
 Flask Video Tutorials by Corey Schafer:
 
 &nbsp;&nbsp;&nbsp;&nbsp;[Flask Youtube tutorial series](https://www.youtube.com/watch?v=MwZwr5Tvyxo&list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH)
-&nbsp;&nbsp;&nbsp;&nbsp;[Github repo of tutorial](https://github.com/CoreyMSchafer/code_snippets/tree/master/Python/Flask_Blog)
+&nbsp;&nbsp;&nbsp;&nbsp;[Github repository of tutorial](https://github.com/CoreyMSchafer/code_snippets/tree/master/Python/Flask_Blog)
+
 Flask Dance module by David Goldbaum for OAuth2 in Flask:
 
 &nbsp;&nbsp;&nbsp;&nbsp;[Documentation Flask Dance](https://flask-dance.readthedocs.io/en/latest/)
