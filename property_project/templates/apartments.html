@@ -2,16 +2,13 @@
 {% block content %}
 <h3>Latest offers for apartments</h3>
 <div class="gap-20"></div>
-<!-- -->
 <div class="card-deck-wrapper">
     <div class="card-deck">
         <div class="col-md-6">
-            <!-- rows einbauen ?? -->
             {% for apartment in apartments.items %}
             <!-- items => pagination object!! -->
             <div class="card">
-                <!--style="width:200px, height:200px"> -->
-                <!--  <img class="card-img-top" src="../static/images/apartment_1.jpg" alt="image of item"> -->
+
                 <div class="card-body">
                     <h4 class="card-title">{{ apartment.title }}</h4>
                     <p class="card-text">{{ apartment.description }}</p>

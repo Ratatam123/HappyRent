@@ -2,11 +2,9 @@
 {% block content %}
 <h3>What are you looking for?</h3>
 <div class="gap-20"></div>
-<!-- -->
 <div class="card-deck-wrapper">
     <div class="card-deck">
         <div class="col-md-6">
-            <!-- rows einbauen ?? -->
             {% for category in categories %}
             <div class="card">
                 {% if category.type == 'house' %}
