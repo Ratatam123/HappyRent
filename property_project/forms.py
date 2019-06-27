@@ -8,11 +8,15 @@ from property_project.db_models import User
 
 
 class TypeForm(FlaskForm):
-    item_type = SelectField('Category (click on the right to choose)', choices=[
-        ('room', 'Room'), ('apartment', 'Apartment'), ('house', 'House')], validators=[DataRequired()])
+    item_type = SelectField('Category (click on the right to choose)',
+                            choices=[('room', 'Room'),
+                                     ('apartment', 'Apartment'),
+                                     ('house', 'House')],
+                            validators=[DataRequired()])
 
     submit = SubmitField(
         'Save the category and let me give you more info about the offer')
+
 
 class ItemForm(FlaskForm):
 
@@ -21,32 +25,40 @@ class ItemForm(FlaskForm):
     rooms = IntegerField('Number of rooms', validators=[DataRequired()])
     size = IntegerField('Size in square meters (whole number)', validators=[
                         DataRequired()], render_kw={"placeholder": "50"})
-    rent = IntegerField('Rent in Euro (whole amount without cents)', validators=[
-                        DataRequired()], render_kw={"placeholder": "100"})
+    rent = IntegerField('Rent in Euro (whole amount without cents)',
+                        validators=[DataRequired()],
+                        render_kw={"placeholder": "100"})
 
     submit = SubmitField('Publish my offer!')
 
 
 class LocalRegistrationForm(FlaskForm):
 
-    password = PasswordField(
-        'Add a local Password to your Github username', validators=[DataRequired()])
+    password = PasswordField('Add a local Password to your Github username',
+                             validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password',
-                                     validators=[DataRequired(), EqualTo('password')])
+                                     validators=[DataRequired(),
+                                                 EqualTo('password')])
     submit = SubmitField('Add local password.')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user:
-            raise ValidationError('That username is not known to our system yet,'
-                                  + ' please retry logging in via Github.')
+            raise ValidationError('That username is not known to our system'
+                                  + 'yet, please retry logging in via Github.')
 
 
 class LocalLoginForm(FlaskForm):
     username = StringField('Username',
                            validators=[DataRequired(), Length(min=2, max=20)],
-                           render_kw={"placeholder": "Put your Github username here."})
+                           render_kw={"placeholder": "Put your Github" +
+                                      "username here."})
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
+
+
+
+
+
 

@@ -6,7 +6,8 @@ from property_project import app, db
 from flask_dance.contrib.google import make_google_blueprint, google
 
 from flask_login import UserMixin, current_user
-from flask_dance.consumer.storage.sqla import OAuthConsumerMixin, SQLAlchemyStorage
+from flask_dance.consumer.storage.sqla import (OAuthConsumerMixin,
+                                               SQLAlchemyStorage)
 
 
 class User(db.Model, UserMixin):
@@ -19,7 +20,7 @@ class User(db.Model, UserMixin):
     # def __repr__(self):
     #     f"User('{self.username}'),'{self.email}')"
 
-    @property   # ersetzt jsonify()?? in routes ggueber Restaurant-App-Vorbild?
+    @property   # ersetzt jsonify()??
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
@@ -89,13 +90,18 @@ class PropertyItem(db.Model):
 
 
 # Google OAuth blueprint
-google_blueprint = make_google_blueprint(scope=["openid",
-                                                "https://www.googleapis.com/auth/userinfo.profile",
-                                                "https://www.googleapis.com/auth/userinfo.email"])
+google_blueprint = make_google_blueprint(
+    scope=["openid",
+           "https://www.googleapis.com/auth/userinfo.profile",
+           "https://www.googleapis.com/auth/userinfo.email"])
 
 app.register_blueprint(google_blueprint, url_prefix="/google_login")
-google_blueprint.storage = SQLAlchemyStorage(OAuth, db.session, user=current_user,
+google_blueprint.storage = SQLAlchemyStorage(OAuth, db.session,
+                                             user=current_user,
                                              user_required=False)
+
+
+
 
 
 

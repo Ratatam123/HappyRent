@@ -25,13 +25,19 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
+# redirection to Google sign-in page
+@login_manager.unauthorized_handler
+def handle_needs_login():
+    #flash("You have to be logged in to access this page.", "info")
+    return redirect(url_for('google.login', next=request.endpoint))
+
+
+@app.route("/")
 @app.route("/home")
 def home():
-    if not google.authorized:
-        return redirect(url_for("google.login"))
-
     property_types = []
-    for type in db.session.query(PropertyType).distinct(PropertyType.type).group_by(PropertyType.type):
+    for type in db.session.query(PropertyType).distinct(PropertyType.type)\
+            .group_by(PropertyType.type):
         property_types.append(type)
 
     return render_template('home.html', categories=property_types)
@@ -43,17 +49,26 @@ def about():
 
 #### GOOGLE LOGIN #####
 
-@app.route("/")
+# @app.route("/")
+
+
 @app.route('/google_login')
 def google_login():
-    if not google.authorized:  ## wiederhole authorized
+    if not google.authorized:  # wiederhole authorized
         return redirect(url_for('google.login'))
 
     account_info = google.get("/oauth2/v1/userinfo")
 
     if account_info.ok:
-        account_info_json = account_info.json()  # was passiert hier mit account_info??
-        return redirect(url_for('home'))
+        # was passiert hier mit account_info??
+        account_info_json = account_info.json()
+
+        # OlD
+        # return redirect(url_for('home'))
+
+        # NEW
+        next = request.args.get('next')
+        return redirect(next or url_for('home'))
 
     return '<h1>Try again!<h1>'
 
@@ -62,8 +77,8 @@ def google_login():
 @oauth_authorized.connect_via(google_blueprint)
 def google_logged_in(blueprint, token):
     """
-    The first argument is the object that should be called when the signal is emitted,
-    the optional second argument specifies a sender."""
+    The first argument is the object that should be called when the signal 
+    is emitted, the optional second argument specifies a sender."""
 
     account_info = blueprint.session.get("/oauth2/v1/userinfo")
     if account_info.ok:
@@ -82,7 +97,8 @@ def google_logged_in(blueprint, token):
             db.session.commit()
 
         login_user(user)
-        flash("You are logged in with Google.", 'success')
+        flash("You are logged in with Google and ready to create," +
+              "update and delete your own offers.", 'success')
 
 
 @app.route("/logout")
@@ -100,16 +116,18 @@ def logout():
     except:
         logout_user()
         del google_blueprint.token
-        return redirect(url_for('google.login'))
-
+        flash("You are logged out.", 'success')
+        return redirect('home')
     logout_user()
     del google_blueprint.token
-    return redirect(url_for('google.login'))
-
+    flash("You are logged out.", 'success')
+    return redirect('home')
 
 # JSON Endpoints
 
 # all items
+
+
 @app.route('/all_items/JSON')
 def property_items_JSON():
     items = PropertyItem.query.all()
@@ -155,9 +173,11 @@ def show_houses():
 def show_apartments():
 
     page = request.args.get('page', 1, type=int)  # starting page
-    apartments = PropertyItem.query.join(PropertyItem.property_type, aliased=True)\
+    apartments = PropertyItem.query\
+        .join(PropertyItem.property_type, aliased=True)\
         .filter_by(type='apartment')\
-        .order_by(PropertyItem.date_posted.desc()).paginate(page=page, per_page=2)
+        .order_by(PropertyItem.date_posted.desc())\
+        .paginate(page=page, per_page=2)
 
     return render_template('apartments.html', apartments=apartments)
 
@@ -168,16 +188,19 @@ def show_rooms():
     page = request.args.get('page', 1, type=int)  # starting page
     rooms = PropertyItem.query.join(PropertyItem.property_type, aliased=True)\
         .filter_by(type='room')\
-        .order_by(PropertyItem.date_posted.desc()).paginate(page=page, per_page=2)
+        .order_by(PropertyItem.date_posted.desc())\
+        .paginate(page=page, per_page=2)
 
     return render_template('rooms.html', rooms=rooms)
 
-# Creation of new item is distributed between 2 Forms, 1 used in each of the next 2 routes
+# Creation of new item is distributed between 2 Forms,
+# 1 used in each of the next 2 routes
 
 
 @login_required
 @app.route("/new_type", methods=['GET', 'POST'])
 def new_type():
+    # NEW
     if not google.authorized:
         return redirect(url_for('google.login'))
     type_form = TypeForm()
@@ -185,11 +208,13 @@ def new_type():
         item_type = PropertyType(type=type_form.item_type.data)
         db.session.add(item_type)
         db.session.commit()
-        flash('Category "{}" has been saved, please add more details below.'.format(
-            item_type.type.capitalize()), 'success')  # success => communicates with Bootstrap
+        flash('Category "{}" has been saved, please add more details below.'
+              .format(
+                  item_type.type.capitalize()), 'success')
         return redirect(url_for('new_item'))
 
-    return render_template('create_type.html', title='New Item', form=type_form)
+    return render_template('create_type.html', title='New Item',
+                           form=type_form)
 
 
 @login_required
@@ -201,9 +226,13 @@ def new_item():
         item_type = db.session.query(PropertyType).order_by(
             asc(PropertyType.date_posted)).first()
 
-        item = PropertyItem(title=form.title.data,  property_type=item_type,
-                            description=form.description.data, rooms=form.rooms.data,
-                            size=form.size.data, rent=form.rent.data, author=current_user)
+        item = PropertyItem(title=form.title.data,
+                            property_type=item_type,
+                            description=form.description.data,
+                            rooms=form.rooms.data,
+                            size=form.size.data,
+                            rent=form.rent.data,
+                            author=current_user)
 
         db.session.add(item)
         db.session.commit()
@@ -222,6 +251,9 @@ def single_item(item_id):
 @app.route("/item/<int:item_id>/update", methods=['GET', 'POST'])
 @login_required
 def update_item(item_id):
+    # NEW
+    if not google.authorized:
+        return redirect(url_for('google.login'))
     item = PropertyItem.query.get_or_404(item_id)
     if item.author != current_user:
         abort(403)
@@ -249,6 +281,9 @@ def update_item(item_id):
 @app.route("/item/<int:item_id>/delete", methods=['POST'])
 @login_required
 def delete_item(item_id):
+    # NEW
+    if not google.authorized:
+        return redirect(url_for('google.login'))
     item = PropertyItem.query.get_or_404(item_id)
     if item.author != current_user:
         abort(403)
@@ -265,11 +300,16 @@ def user_items(username):
     prop_items = PropertyItem.query.filter_by(author=user)\
         .order_by(PropertyItem.date_posted.desc())\
         .paginate(page=page, per_page=3)
-    return render_template('user_items.html', prop_items=prop_items, user=user)
+    return render_template('user_items.html', prop_items=prop_items,
+                           user=user)
 
 
+@login_required
 @app.route("/current_user/items")
 def current_user_items():
+    # NEW
+    if not google.authorized:
+        return redirect(url_for('google.login'))
     page = request.args.get('page', 1, type=int)  # for pagination
     user = User.query.filter_by(username=current_user.username).first_or_404()
 
@@ -277,7 +317,12 @@ def current_user_items():
         .order_by(PropertyItem.date_posted.desc())\
         .paginate(page=page, per_page=3)
 
-    return render_template('current_user_items.html', prop_items=prop_items, user=user)
+    return render_template('current_user_items.html', prop_items=prop_items,
+                           user=user)
+
+
+
+
 
 
 
