@@ -37,7 +37,7 @@ def handle_needs_login():
 def home():
     property_types = []
     for type in db.session.query(PropertyType).distinct(PropertyType.type)\
-            .group_by(PropertyType.type):
+            .group_by(PropertyType.type, PropertyType.id):
         property_types.append(type)
 
     return render_template('home.html', categories=property_types)
