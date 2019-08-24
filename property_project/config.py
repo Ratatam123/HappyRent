@@ -1,23 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import os
-<<<<<<< HEAD
 import sys
 import json
-||||||| merged common ancestors
-=======
-import json
->>>>>>> ef6fc9527b6c14733e40abaf2b53746848037db9
 
-<<<<<<< HEAD
 # os.path.join(sys.path[0], 'some file.txt')
 with open(os.path.join(sys.path[0],'property_project/config.json')) as config_file:
         config = json.load(config_file)
-||||||| merged common ancestors
-=======
-with open('/config.json') as config_file:
-        config = json.load(config_file)
->>>>>>> ef6fc9527b6c14733e40abaf2b53746848037db9
+
 
 class Config:
     # os.environ.get('SECRET_KEY')
