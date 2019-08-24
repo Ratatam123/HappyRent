@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 import json
 
-with open('/config.json') as config_file:
+# os.path.join(sys.path[0], 'some file.txt')
+with open(os.path.join(sys.path[0],'property_project/config.json')) as config_file:
         config = json.load(config_file)
 
 class Config:
